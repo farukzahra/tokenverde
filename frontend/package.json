@@ -20,7 +20,7 @@
     "axios": "^1.6.0",
     "web3": "^4.3.0",
     "leaflet": "^1.9.4",
-    "vue-leaflet": "^2.0.0",
+    "@vue-leaflet/vue-leaflet": "^0.8.0",
     "@headlessui/vue": "^1.7.16",
     "@heroicons/vue": "^2.0.18",
     "chart.js": "^4.4.0",
