@@ -22,7 +22,7 @@ model User {
   // Relations
   properties    Property[]
   transactions  Transaction[]
-  tokens        Token[]
+  tokenHolders  TokenHolder[]
   reports       EnvironmentalReport[]
 
   @@map("users")
