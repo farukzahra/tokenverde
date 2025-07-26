@@ -1,0 +1,181 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      UserRole @default(INVESTOR)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  properties    Property[]
+  transactions  Transaction[]
+  tokens        Token[]
+  reports       EnvironmentalReport[]
+
+  @@map("users")
+}
+
+model Property {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  address     String
+  latitude    Float
+  longitude   Float
+  area        Float // em hectares
+  status      PropertyStatus @default(PENDING)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  ownerId     String
+  owner       User     @relation(fields: [ownerId], references: [id])
+  greenAreas  GreenArea[]
+  tokens      Token[]
+
+  @@map("properties")
+}
+
+model GreenArea {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  area        Float // em hectares
+  coordinates Json     // Array de coordenadas
+  status      GreenAreaStatus @default(ACTIVE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id])
+  tokens      Token[]
+  reports     EnvironmentalReport[]
+
+  @@map("green_areas")
+}
+
+model Token {
+  id          String   @id @default(cuid())
+  name        String
+  symbol      String
+  totalSupply Int
+  price       Float
+  status      TokenStatus @default(ACTIVE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  greenAreaId String
+  greenArea   GreenArea @relation(fields: [greenAreaId], references: [id])
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id])
+  transactions Transaction[]
+  holders     TokenHolder[]
+
+  @@map("tokens")
+}
+
+model TokenHolder {
+  id        String   @id @default(cuid())
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  tokenId   String
+  token     Token    @relation(fields: [tokenId], references: [id])
+
+  @@unique([userId, tokenId])
+  @@map("token_holders")
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  type        TransactionType
+  amount      Float
+  quantity    Int
+  status      TransactionStatus @default(PENDING)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  tokenId     String
+  token       Token    @relation(fields: [tokenId], references: [id])
+
+  @@map("transactions")
+}
+
+model EnvironmentalReport {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  data        Json     // Dados do relatório
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  greenAreaId String
+  greenArea   GreenArea @relation(fields: [greenAreaId], references: [id])
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+
+  @@map("environmental_reports")
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  INVESTOR
+  PROPERTY_OWNER
+}
+
+enum PropertyStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  ACTIVE
+  INACTIVE
+}
+
+enum GreenAreaStatus {
+  ACTIVE
+  INACTIVE
+  UNDER_AUDIT
+}
+
+enum TokenStatus {
+  ACTIVE
+  INACTIVE
+  PAUSED
+}
+
+enum TransactionType {
+  BUY
+  SELL
+  TRANSFER
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+} 
