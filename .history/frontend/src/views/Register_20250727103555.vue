@@ -64,6 +64,7 @@
             <select v-model="form.role" class="input-field" required>
               <option value="INVESTOR">Investidor</option>
               <option value="PROPERTY_OWNER">Proprietário de Terreno</option>
+              <option value="ADMIN">Administrador</option>
             </select>
           </div>
           

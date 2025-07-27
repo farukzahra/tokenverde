@@ -1,6 +1,6 @@
 module.exports = {
   database: {
-    url: process.env.DATABASE_URL || "postgresql://postgres:password@localhost:5432/tokenverde_db"
+    url: process.env.DATABASE_URL || "postgresql://farukzahra@localhost:5432/tokenverde_db"
   },
   
   jwt: {
