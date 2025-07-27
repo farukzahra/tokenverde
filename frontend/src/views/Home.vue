@@ -10,11 +10,11 @@
             </div>
             <h1 class="ml-3 text-2xl font-bold text-gray-900">TokenVerde</h1>
           </div>
-          <nav class="hidden md:flex space-x-8">
-            <router-link to="/" class="text-gray-900 hover:text-tokenverde-600">Início</router-link>
-            <router-link to="/map" class="text-gray-900 hover:text-tokenverde-600">Mapa</router-link>
-            <router-link to="/login" class="text-gray-900 hover:text-tokenverde-600">Login</router-link>
-            <router-link to="/register" class="btn-primary">Cadastrar</router-link>
+          <nav class="hidden md:flex items-center space-x-8">
+            <router-link to="/" class="text-gray-900 hover:text-tokenverde-600 transition-colors">Início</router-link>
+            <router-link to="/map" class="text-gray-900 hover:text-tokenverde-600 transition-colors">Mapa</router-link>
+            <router-link to="/login" class="text-gray-900 hover:text-tokenverde-600 transition-colors">Login</router-link>
+            <router-link to="/register" class="bg-tokenverde-600 hover:bg-tokenverde-700 text-white px-4 py-2 rounded-lg transition-colors">Cadastrar</router-link>
           </nav>
         </div>
       </div>
