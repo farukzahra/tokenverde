@@ -114,17 +114,9 @@
                   <h4 class="font-medium">{{ property.name }}</h4>
                   <p class="text-sm text-gray-600">{{ property.area }} hectares</p>
                 </div>
-                <div class="flex items-center space-x-2">
-                  <span :class="getStatusClass(property.status)">
-                    {{ getStatusLabel(property.status) }}
-                  </span>
-                  <button 
-                    @click="$router.push(`/property-edit/${property.id}`)"
-                    class="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                  >
-                    Editar
-                  </button>
-                </div>
+                <span :class="getStatusClass(property.status)">
+                  {{ getStatusLabel(property.status) }}
+                </span>
               </div>
             </div>
           </div>
