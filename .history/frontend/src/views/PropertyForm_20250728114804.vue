@@ -180,7 +180,7 @@
           <div class="flex justify-end space-x-4 pt-6 border-t">
             <button 
               type="button"
-              @click="$router.push('/dashboard')"
+              @click="$router.push('/profile')"
               class="btn-secondary"
             >
               Cancelar

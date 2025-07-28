@@ -6,7 +6,7 @@
       </div>
 
       <!-- Informações do Usuário -->
-      <div class="max-w-2xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div class="card">
           <h2 class="text-xl font-semibold text-gray-900 mb-4">Informações Pessoais</h2>
           <div class="space-y-4">
@@ -28,6 +28,8 @@
             </div>
           </div>
         </div>
+
+
       </div>
     </div>
   </div>
@@ -56,7 +58,26 @@ onMounted(async () => {
 
 })
 
+const loadProperties = async () => {
+  loading.value = true
+  try {
+    const token = localStorage.getItem('token')
+    const response = await axios.get('http://localhost:5001/api/properties', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
 
+    if (response.data.success) {
+      // Filtrar apenas propriedades do usuário logado
+      properties.value = response.data.data.filter(prop => prop.ownerId === user.id)
+    }
+  } catch (error) {
+    console.error('Erro ao carregar propriedades:', error)
+  } finally {
+    loading.value = false
+  }
+}
 
 const getUserRoleLabel = (role) => {
   const labels = {
@@ -67,7 +88,27 @@ const getUserRoleLabel = (role) => {
   return labels[role] || role
 }
 
+const getStatusLabel = (status) => {
+  const labels = {
+    'PENDING': 'Pendente',
+    'APPROVED': 'Aprovada',
+    'REJECTED': 'Rejeitada',
+    'ACTIVE': 'Ativa',
+    'INACTIVE': 'Inativa'
+  }
+  return labels[status] || status
+}
 
+const getStatusClass = (status) => {
+  const classes = {
+    'PENDING': 'px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full',
+    'APPROVED': 'px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full',
+    'REJECTED': 'px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full',
+    'ACTIVE': 'px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full',
+    'INACTIVE': 'px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full'
+  }
+  return classes[status] || 'px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full'
+}
 
 const formatDate = (dateString) => {
   if (!dateString) return '-'

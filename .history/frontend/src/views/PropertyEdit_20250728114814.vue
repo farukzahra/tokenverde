@@ -2,8 +2,8 @@
   <div class="min-h-screen bg-gray-50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Cadastrar Propriedade</h1>
-        <p class="text-gray-600 mt-2">Adicione uma nova propriedade para tokenização</p>
+        <h1 class="text-3xl font-bold text-gray-900">Editar Propriedade</h1>
+        <p class="text-gray-600 mt-2">Atualize as informações da propriedade</p>
       </div>
 
       <!-- Mensagem de sucesso -->
@@ -16,7 +16,11 @@
         {{ errorMessage }}
       </div>
 
-      <div class="card">
+      <div v-if="loading" class="text-center py-8">
+        <p class="text-gray-600">Carregando propriedade...</p>
+      </div>
+
+      <div v-else-if="property" class="card">
         <form @submit.prevent="handleSubmit" class="space-y-6">
           <!-- Informações Básicas -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -91,6 +95,18 @@
             ></textarea>
           </div>
 
+          <!-- Status da Propriedade -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+            <select v-model="form.status" class="input-field">
+              <option value="PENDING">Pendente</option>
+              <option value="APPROVED">Aprovada</option>
+              <option value="REJECTED">Rejeitada</option>
+              <option value="ACTIVE">Ativa</option>
+              <option value="INACTIVE">Inativa</option>
+            </select>
+          </div>
+
           <!-- Upload de Documentos -->
           <div class="border-t pt-6">
             <h3 class="text-lg font-medium text-gray-900 mb-4">Documentos da Propriedade</h3>
@@ -119,6 +135,9 @@
                   <span v-if="form.matriculaImovel" class="text-sm text-green-600">
                     ✓ Arquivo selecionado
                   </span>
+                  <span v-else-if="property.matriculaImovel" class="text-sm text-blue-600">
+                    📄 Documento já enviado
+                  </span>
                 </div>
               </div>
 
@@ -144,6 +163,9 @@
                   </button>
                   <span v-if="form.car" class="text-sm text-green-600">
                     ✓ Arquivo selecionado
+                  </span>
+                  <span v-else-if="property.car" class="text-sm text-blue-600">
+                    📄 Documento já enviado
                   </span>
                 </div>
               </div>
@@ -171,6 +193,9 @@
                   <span v-if="form.georreferenciamento" class="text-sm text-green-600">
                     ✓ Arquivo selecionado
                   </span>
+                  <span v-else-if="property.georreferenciamento" class="text-sm text-blue-600">
+                    📄 Documento já enviado
+                  </span>
                 </div>
               </div>
             </div>
@@ -180,7 +205,7 @@
           <div class="flex justify-end space-x-4 pt-6 border-t">
             <button 
               type="button"
-              @click="$router.push('/dashboard')"
+              @click="$router.push('/profile')"
               class="btn-secondary"
             >
               Cancelar
@@ -190,8 +215,8 @@
               class="btn-primary"
               :disabled="loading"
             >
-              <span v-if="loading">Cadastrando...</span>
-              <span v-else>Cadastrar Propriedade</span>
+              <span v-if="loading">Atualizando...</span>
+              <span v-else>Atualizar Propriedade</span>
             </button>
           </div>
         </form>
@@ -202,11 +227,13 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 
 const router = useRouter()
+const route = useRoute()
 
+const property = ref(null)
 const form = reactive({
   name: '',
   description: '',
@@ -214,6 +241,7 @@ const form = reactive({
   latitude: '',
   longitude: '',
   area: '',
+  status: 'PENDING',
   matriculaImovel: null,
   car: null,
   georreferenciamento: null
@@ -223,13 +251,49 @@ const loading = ref(false)
 const successMessage = ref('')
 const errorMessage = ref('')
 
-// Verificar se o usuário está logado
-onMounted(() => {
+onMounted(async () => {
   const user = JSON.parse(localStorage.getItem('user') || '{}')
   if (!user.id) {
     router.push('/login')
+    return
   }
+
+  await loadProperty()
 })
+
+const loadProperty = async () => {
+  loading.value = true
+  try {
+    const token = localStorage.getItem('token')
+    const propertyId = route.params.id
+
+    const response = await axios.get(`http://localhost:5001/api/properties/${propertyId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+    if (response.data.success) {
+      property.value = response.data.data
+      
+      // Preencher formulário com dados existentes
+      Object.assign(form, {
+        name: property.value.name,
+        description: property.value.description || '',
+        address: property.value.address,
+        latitude: property.value.latitude,
+        longitude: property.value.longitude,
+        area: property.value.area,
+        status: property.value.status
+      })
+    }
+  } catch (error) {
+    console.error('Erro ao carregar propriedade:', error)
+    errorMessage.value = 'Erro ao carregar propriedade'
+  } finally {
+    loading.value = false
+  }
+}
 
 const handleFileChange = (field, event) => {
   const file = event.target.files[0]
@@ -248,15 +312,14 @@ const handleFileChange = (field, event) => {
 }
 
 const handleSubmit = async () => {
-  // Limpar mensagens
   successMessage.value = ''
   errorMessage.value = ''
   
   loading.value = true
 
   try {
-    const user = JSON.parse(localStorage.getItem('user') || '{}')
     const token = localStorage.getItem('token')
+    const propertyId = route.params.id
 
     const formData = new FormData()
     formData.append('name', form.name)
@@ -265,7 +328,7 @@ const handleSubmit = async () => {
     formData.append('latitude', form.latitude)
     formData.append('longitude', form.longitude)
     formData.append('area', form.area)
-    formData.append('ownerId', user.id)
+    formData.append('status', form.status)
 
     // Adicionar arquivos se selecionados
     if (form.matriculaImovel) {
@@ -278,7 +341,7 @@ const handleSubmit = async () => {
       formData.append('georreferenciamento', form.georreferenciamento)
     }
 
-    const response = await axios.post('http://localhost:5001/api/properties', formData, {
+    const response = await axios.put(`http://localhost:5001/api/properties/${propertyId}`, formData, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
@@ -288,15 +351,6 @@ const handleSubmit = async () => {
     if (response.data.success) {
       successMessage.value = response.data.message
       
-      // Limpar formulário
-      Object.keys(form).forEach(key => {
-        if (key === 'matriculaImovel' || key === 'car' || key === 'georreferenciamento') {
-          form[key] = null
-        } else {
-          form[key] = ''
-        }
-      })
-
       // Redirecionar após 2 segundos
       setTimeout(() => {
         router.push('/dashboard')
@@ -304,14 +358,14 @@ const handleSubmit = async () => {
     }
 
   } catch (error) {
-    console.error('Erro ao cadastrar propriedade:', error)
+    console.error('Erro ao atualizar propriedade:', error)
     
     if (error.response?.data?.message) {
       errorMessage.value = error.response.data.message
     } else if (error.response?.data?.errors) {
       errorMessage.value = error.response.data.errors[0].msg
     } else {
-      errorMessage.value = 'Erro ao cadastrar propriedade. Tente novamente.'
+      errorMessage.value = 'Erro ao atualizar propriedade. Tente novamente.'
     }
   } finally {
     loading.value = false
