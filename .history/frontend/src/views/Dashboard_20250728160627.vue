@@ -7,7 +7,13 @@
           <div class="text-sm text-gray-600">
             Bem-vindo, <span @click="$router.push('/profile')" class="text-blue-600 hover:text-blue-800 cursor-pointer font-medium">{{ user.name }}</span>!
           </div>
-
+          <button 
+            v-if="user.role === 'ADMIN'"
+            @click="$router.push('/admin')"
+            class="btn-primary"
+          >
+            Painel Admin
+          </button>
           <button 
             v-if="user.role === 'PROPERTY_OWNER'"
             @click="$router.push('/property-form')"

@@ -7,7 +7,13 @@
           <div class="text-sm text-gray-600">
             Bem-vindo, <span @click="$router.push('/profile')" class="text-blue-600 hover:text-blue-800 cursor-pointer font-medium">{{ user.name }}</span>!
           </div>
-
+          <button 
+            v-if="user.role === 'ADMIN'"
+            @click="$router.push('/admin')"
+            class="btn-primary"
+          >
+            Painel Admin
+          </button>
           <button 
             v-if="user.role === 'PROPERTY_OWNER'"
             @click="$router.push('/property-form')"
@@ -239,9 +245,7 @@ const loadDashboardData = async () => {
     const headers = { 'Authorization': `Bearer ${token}` }
 
     // Carregar dados baseado no tipo de usuário
-    if (user.role === 'ADMIN') {
-      await loadAdminStats(headers)
-    } else if (user.role === 'INVESTIDOR') {
+    if (user.role === 'INVESTIDOR') {
       await loadTokenHolders(headers)
     } else if (user.role === 'PROPERTY_OWNER') {
       await loadProperties(headers)
@@ -256,23 +260,6 @@ const loadDashboardData = async () => {
     console.error('Erro ao carregar dados do dashboard:', error)
   } finally {
     loading.value = false
-  }
-}
-
-const loadAdminStats = async (headers) => {
-  try {
-    const response = await axios.get('http://localhost:5001/api/properties', { headers })
-    if (response.data.success) {
-      const properties = response.data.data
-      adminStats.value = {
-        pending: properties.filter(p => p.status === 'PENDING').length,
-        approved: properties.filter(p => p.status === 'APPROVED').length,
-        rejected: properties.filter(p => p.status === 'REJECTED').length,
-        total: properties.length
-      }
-    }
-  } catch (error) {
-    console.error('Erro ao carregar estatísticas administrativas:', error)
   }
 }
 
