@@ -278,7 +278,7 @@ const loadAdminStats = async (headers) => {
 
 const loadTokenHolders = async (headers) => {
   try {
-    const response = await api.get('/api/tokens/holders', { headers })
+    const response = await axios.get('http://localhost:5001/api/tokens/holders', { headers })
     if (response.data.success) {
       tokenHolders.value = response.data.data.filter(holder => holder.userId === user.id)
     }
@@ -289,7 +289,7 @@ const loadTokenHolders = async (headers) => {
 
 const loadProperties = async (headers) => {
   try {
-    const response = await api.get('/api/properties', { headers })
+    const response = await axios.get('http://localhost:5001/api/properties', { headers })
     if (response.data.success) {
       properties.value = response.data.data.filter(prop => prop.ownerId === user.id)
     }
@@ -300,7 +300,7 @@ const loadProperties = async (headers) => {
 
 const loadTransactions = async (headers) => {
   try {
-    const response = await api.get('/api/transactions', { headers })
+    const response = await axios.get('http://localhost:5001/api/transactions', { headers })
     if (response.data.success) {
       transactions.value = response.data.data.filter(t => t.userId === user.id)
     }

@@ -1,13 +1,12 @@
 {
   "name": "tokenverde-frontend",
   "version": "1.0.0",
-  "description": "TokenVerde Frontend",
-  "type": "module",
+  "description": "Frontend da plataforma TokenVerde - Tokenização de Áreas Verdes",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "npm run build",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",

@@ -300,7 +300,7 @@ const loadProperties = async (headers) => {
 
 const loadTransactions = async (headers) => {
   try {
-    const response = await api.get('/api/transactions', { headers })
+    const response = await axios.get('http://localhost:5001/api/transactions', { headers })
     if (response.data.success) {
       transactions.value = response.data.data.filter(t => t.userId === user.id)
     }

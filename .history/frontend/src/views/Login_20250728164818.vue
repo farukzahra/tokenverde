@@ -80,7 +80,7 @@ const handleLogin = async () => {
   loading.value = true
   
   try {
-          const response = await api.post('/api/auth/login', {
+    const response = await axios.post('http://localhost:5001/api/auth/login', {
       email: form.email,
       password: form.password
     })

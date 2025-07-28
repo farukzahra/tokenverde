@@ -323,7 +323,7 @@ const loadOwners = async () => {
 const updatePropertyStatus = async (propertyId, newStatus) => {
   try {
     const token = localStorage.getItem('token')
-    const response = await api.put(`/api/properties/${propertyId}/status`, {
+    const response = await axios.put(`http://localhost:5001/api/properties/${propertyId}/status`, {
       status: newStatus
     }, {
       headers: {
@@ -373,7 +373,7 @@ const formatDate = (dateString) => {
 const openPDF = async (propertyId, documentType) => {
   try {
     const token = localStorage.getItem('token')
-    const response = await api.get(`/api/properties/${propertyId}/${documentType}`, {
+    const response = await axios.get(`http://localhost:5001/api/properties/${propertyId}/${documentType}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       },

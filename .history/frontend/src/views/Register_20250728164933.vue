@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-50 flex items-center justify-center">
     <div class="max-w-md w-full">
       <div class="card">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Login</h2>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Cadastro</h2>
         
         <!-- Mensagem de sucesso -->
         <div v-if="successMessage" class="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
@@ -14,7 +14,18 @@
           {{ errorMessage }}
         </div>
         
-        <form @submit.prevent="handleLogin" class="space-y-4">
+        <form @submit.prevent="handleRegister" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+            <input 
+              v-model="form.name" 
+              type="text" 
+              class="input-field" 
+              placeholder="Seu nome completo"
+              required
+            >
+          </div>
+          
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input 
@@ -37,19 +48,38 @@
             >
           </div>
           
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Confirmar Senha</label>
+            <input 
+              v-model="form.confirmPassword" 
+              type="password" 
+              class="input-field" 
+              placeholder="••••••••"
+              required
+            >
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Usuário</label>
+            <select v-model="form.role" class="input-field" required>
+              <option value="INVESTOR">Investidor</option>
+              <option value="PROPERTY_OWNER">Proprietário de Terreno</option>
+            </select>
+          </div>
+          
           <button 
             type="submit" 
             class="btn-primary w-full"
             :disabled="loading"
           >
-            <span v-if="loading">Entrando...</span>
-            <span v-else>Entrar</span>
+            <span v-if="loading">Cadastrando...</span>
+            <span v-else>Cadastrar</span>
           </button>
         </form>
         
         <p class="text-center mt-4 text-gray-600">
-          Não tem uma conta? 
-          <router-link to="/register" class="text-tokenverde-600 hover:underline">Cadastre-se</router-link>
+          Já tem uma conta? 
+          <router-link to="/login" class="text-tokenverde-600 hover:underline">Faça login</router-link>
         </p>
       </div>
     </div>
@@ -64,25 +94,41 @@ import api from '../config/axios'
 const router = useRouter()
 
 const form = reactive({
+  name: '',
   email: '',
-  password: ''
+  password: '',
+  confirmPassword: '',
+  role: 'INVESTOR'
 })
 
 const loading = ref(false)
 const successMessage = ref('')
 const errorMessage = ref('')
 
-const handleLogin = async () => {
+const handleRegister = async () => {
   // Limpar mensagens anteriores
   successMessage.value = ''
   errorMessage.value = ''
   
+  // Validações básicas
+  if (form.password !== form.confirmPassword) {
+    errorMessage.value = 'As senhas não coincidem'
+    return
+  }
+  
+  if (form.password.length < 6) {
+    errorMessage.value = 'A senha deve ter pelo menos 6 caracteres'
+    return
+  }
+  
   loading.value = true
   
   try {
-          const response = await api.post('/api/auth/login', {
+    const response = await axios.post('http://localhost:5001/api/auth/register', {
+      name: form.name,
       email: form.email,
-      password: form.password
+      password: form.password,
+      role: form.role
     })
     
     if (response.data.success) {
@@ -92,21 +138,21 @@ const handleLogin = async () => {
       localStorage.setItem('token', response.data.token)
       localStorage.setItem('user', JSON.stringify(response.data.user))
       
-      // Redirecionar para o dashboard após 1 segundo
+      // Redirecionar para o dashboard após 2 segundos
       setTimeout(() => {
         router.push('/dashboard')
-      }, 1000)
+      }, 2000)
     }
     
   } catch (error) {
-    console.error('Erro no login:', error)
+    console.error('Erro no cadastro:', error)
     
     if (error.response?.data?.message) {
       errorMessage.value = error.response.data.message
     } else if (error.response?.data?.errors) {
       errorMessage.value = error.response.data.errors[0].msg
     } else {
-      errorMessage.value = 'Erro ao realizar login. Tente novamente.'
+      errorMessage.value = 'Erro ao realizar cadastro. Tente novamente.'
     }
   } finally {
     loading.value = false
