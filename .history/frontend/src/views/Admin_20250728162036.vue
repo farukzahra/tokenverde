@@ -140,36 +140,39 @@
                 
                 <!-- Links para documentos -->
                 <div class="flex space-x-2 mt-2">
-                  <button 
+                  <a 
                     v-if="property.matriculaImovel"
-                    @click="openPDF(property.id, 'matricula')"
+                    :href="`data:application/pdf;base64,${property.matriculaImovel}`"
+                    target="_blank"
                     class="inline-flex items-center px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded hover:bg-blue-200"
                   >
                     <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
                     </svg>
                     Matrícula
-                  </button>
-                  <button 
+                  </a>
+                  <a 
                     v-if="property.car"
-                    @click="openPDF(property.id, 'car')"
+                    :href="`data:application/pdf;base64,${property.car}`"
+                    target="_blank"
                     class="inline-flex items-center px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded hover:bg-green-200"
                   >
                     <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
                     </svg>
                     CAR
-                  </button>
-                  <button 
+                  </a>
+                  <a 
                     v-if="property.georreferenciamento"
-                    @click="openPDF(property.id, 'georreferenciamento')"
+                    :href="`data:application/pdf;base64,${property.georreferenciamento}`"
+                    target="_blank"
                     class="inline-flex items-center px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded hover:bg-purple-200"
                   >
                     <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
                     </svg>
                     Georreferenciamento
-                  </button>
+                  </a>
                 </div>
               </div>
               
@@ -368,25 +371,6 @@ const getStatusClass = (status) => {
 const formatDate = (dateString) => {
   if (!dateString) return '-'
   return new Date(dateString).toLocaleDateString('pt-BR')
-}
-
-const openPDF = async (propertyId, documentType) => {
-  try {
-    const token = localStorage.getItem('token')
-    const response = await axios.get(`http://localhost:5001/api/properties/${propertyId}/${documentType}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      },
-      responseType: 'blob'
-    })
-
-    // Criar URL do blob e abrir em nova aba
-    const blob = new Blob([response.data], { type: 'application/pdf' })
-    const url = window.URL.createObjectURL(blob)
-    window.open(url, '_blank')
-  } catch (error) {
-    console.error(`Erro ao abrir ${documentType}:`, error)
-  }
 }
 
 

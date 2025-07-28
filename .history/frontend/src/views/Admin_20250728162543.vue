@@ -370,24 +370,5 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString('pt-BR')
 }
 
-const openPDF = async (propertyId, documentType) => {
-  try {
-    const token = localStorage.getItem('token')
-    const response = await axios.get(`http://localhost:5001/api/properties/${propertyId}/${documentType}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      },
-      responseType: 'blob'
-    })
-
-    // Criar URL do blob e abrir em nova aba
-    const blob = new Blob([response.data], { type: 'application/pdf' })
-    const url = window.URL.createObjectURL(blob)
-    window.open(url, '_blank')
-  } catch (error) {
-    console.error(`Erro ao abrir ${documentType}:`, error)
-  }
-}
-
 
 </script> 

@@ -466,42 +466,4 @@ router.patch('/:id/status', [
   }
 })
 
-// Obter propriedade por ID (deve vir depois das rotas específicas)
-router.get('/:id', async (req, res) => {
-  try {
-    const property = await prisma.property.findUnique({
-      where: { id: req.params.id },
-      include: {
-        owner: {
-          select: {
-            id: true,
-            name: true,
-            email: true
-          }
-        },
-        greenAreas: true,
-        tokens: true
-      }
-    })
-
-    if (!property) {
-      return res.status(404).json({
-        success: false,
-        message: 'Propriedade não encontrada'
-      })
-    }
-
-    res.json({
-      success: true,
-      data: property
-    })
-  } catch (error) {
-    console.error('Erro ao buscar propriedade:', error)
-    res.status(500).json({
-      success: false,
-      message: 'Erro interno do servidor'
-    })
-  }
-})
-
 module.exports = router 

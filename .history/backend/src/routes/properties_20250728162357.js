@@ -7,92 +7,7 @@ const authMiddleware = require('../middleware/auth')
 
 const prisma = new PrismaClient()
 
-// Endpoints de PDF (antes do middleware global)
-// Servir PDF da matrícula
-router.get('/:id/matricula', authMiddleware, async (req, res) => {
-  try {
-    const property = await prisma.property.findUnique({
-      where: { id: req.params.id },
-      select: { matriculaImovel: true }
-    })
-
-    if (!property || !property.matriculaImovel) {
-      return res.status(404).json({
-        success: false,
-        message: 'Matrícula não encontrada'
-      })
-    }
-
-    const pdfBuffer = Buffer.from(property.matriculaImovel, 'base64')
-    res.setHeader('Content-Type', 'application/pdf')
-    res.setHeader('Content-Disposition', `inline; filename="matricula-${req.params.id}.pdf"`)
-    res.send(pdfBuffer)
-  } catch (error) {
-    console.error('Erro ao servir matrícula:', error)
-    res.status(500).json({
-      success: false,
-      message: 'Erro interno do servidor'
-    })
-  }
-})
-
-// Servir PDF do CAR
-router.get('/:id/car', authMiddleware, async (req, res) => {
-  try {
-    const property = await prisma.property.findUnique({
-      where: { id: req.params.id },
-      select: { car: true }
-    })
-
-    if (!property || !property.car) {
-      return res.status(404).json({
-        success: false,
-        message: 'CAR não encontrado'
-      })
-    }
-
-    const pdfBuffer = Buffer.from(property.car, 'base64')
-    res.setHeader('Content-Type', 'application/pdf')
-    res.setHeader('Content-Disposition', `inline; filename="car-${req.params.id}.pdf"`)
-    res.send(pdfBuffer)
-  } catch (error) {
-    console.error('Erro ao servir CAR:', error)
-    res.status(500).json({
-      success: false,
-      message: 'Erro interno do servidor'
-    })
-  }
-})
-
-// Servir PDF do georreferenciamento
-router.get('/:id/georreferenciamento', authMiddleware, async (req, res) => {
-  try {
-    const property = await prisma.property.findUnique({
-      where: { id: req.params.id },
-      select: { georreferenciamento: true }
-    })
-
-    if (!property || !property.georreferenciamento) {
-      return res.status(404).json({
-        success: false,
-        message: 'Georreferenciamento não encontrado'
-      })
-    }
-
-    const pdfBuffer = Buffer.from(property.georreferenciamento, 'base64')
-    res.setHeader('Content-Type', 'application/pdf')
-    res.setHeader('Content-Disposition', `inline; filename="georreferenciamento-${req.params.id}.pdf"`)
-    res.send(pdfBuffer)
-  } catch (error) {
-    console.error('Erro ao servir georreferenciamento:', error)
-    res.status(500).json({
-      success: false,
-      message: 'Erro interno do servidor'
-    })
-  }
-})
-
-// Aplicar middleware de autenticação em todas as outras rotas
+// Aplicar middleware de autenticação em todas as rotas
 router.use(authMiddleware)
 
 // Configuração do Multer para upload de PDFs (memória)
@@ -151,9 +66,127 @@ router.get('/', async (req, res) => {
   }
 })
 
+// Obter propriedade por ID
+router.get('/:id', async (req, res) => {
+  try {
+    const property = await prisma.property.findUnique({
+      where: { id: req.params.id },
+      include: {
+        owner: {
+          select: {
+            id: true,
+            name: true,
+            email: true
+          }
+        },
+        greenAreas: true,
+        tokens: true
+      }
+    })
 
+    if (!property) {
+      return res.status(404).json({
+        success: false,
+        message: 'Propriedade não encontrada'
+      })
+    }
 
+    res.json({
+      success: true,
+      data: property
+    })
+  } catch (error) {
+    console.error('Erro ao buscar propriedade:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Erro interno do servidor'
+    })
+  }
+})
 
+// Servir PDF da matrícula
+router.get('/:id/matricula', async (req, res) => {
+  try {
+    const property = await prisma.property.findUnique({
+      where: { id: req.params.id },
+      select: { matriculaImovel: true }
+    })
+
+    if (!property || !property.matriculaImovel) {
+      return res.status(404).json({
+        success: false,
+        message: 'Matrícula não encontrada'
+      })
+    }
+
+    const pdfBuffer = Buffer.from(property.matriculaImovel, 'base64')
+    res.setHeader('Content-Type', 'application/pdf')
+    res.setHeader('Content-Disposition', `inline; filename="matricula-${req.params.id}.pdf"`)
+    res.send(pdfBuffer)
+  } catch (error) {
+    console.error('Erro ao servir matrícula:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Erro interno do servidor'
+    })
+  }
+})
+
+// Servir PDF do CAR
+router.get('/:id/car', async (req, res) => {
+  try {
+    const property = await prisma.property.findUnique({
+      where: { id: req.params.id },
+      select: { car: true }
+    })
+
+    if (!property || !property.car) {
+      return res.status(404).json({
+        success: false,
+        message: 'CAR não encontrado'
+      })
+    }
+
+    const pdfBuffer = Buffer.from(property.car, 'base64')
+    res.setHeader('Content-Type', 'application/pdf')
+    res.setHeader('Content-Disposition', `inline; filename="car-${req.params.id}.pdf"`)
+    res.send(pdfBuffer)
+  } catch (error) {
+    console.error('Erro ao servir CAR:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Erro interno do servidor'
+    })
+  }
+})
+
+// Servir PDF do georreferenciamento
+router.get('/:id/georreferenciamento', async (req, res) => {
+  try {
+    const property = await prisma.property.findUnique({
+      where: { id: req.params.id },
+      select: { georreferenciamento: true }
+    })
+
+    if (!property || !property.georreferenciamento) {
+      return res.status(404).json({
+        success: false,
+        message: 'Georreferenciamento não encontrado'
+      })
+    }
+
+    const pdfBuffer = Buffer.from(property.georreferenciamento, 'base64')
+    res.setHeader('Content-Type', 'application/pdf')
+    res.setHeader('Content-Disposition', `inline; filename="georreferenciamento-${req.params.id}.pdf"`)
+    res.send(pdfBuffer)
+  } catch (error) {
+    console.error('Erro ao servir georreferenciamento:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Erro interno do servidor'
+    })
+  }
+})
 
 // Criar propriedade com upload de PDFs
 router.post('/', upload.fields([
@@ -459,44 +492,6 @@ router.patch('/:id/status', [
     })
   } catch (error) {
     console.error('Erro ao atualizar status da propriedade:', error)
-    res.status(500).json({
-      success: false,
-      message: 'Erro interno do servidor'
-    })
-  }
-})
-
-// Obter propriedade por ID (deve vir depois das rotas específicas)
-router.get('/:id', async (req, res) => {
-  try {
-    const property = await prisma.property.findUnique({
-      where: { id: req.params.id },
-      include: {
-        owner: {
-          select: {
-            id: true,
-            name: true,
-            email: true
-          }
-        },
-        greenAreas: true,
-        tokens: true
-      }
-    })
-
-    if (!property) {
-      return res.status(404).json({
-        success: false,
-        message: 'Propriedade não encontrada'
-      })
-    }
-
-    res.json({
-      success: true,
-      data: property
-    })
-  } catch (error) {
-    console.error('Erro ao buscar propriedade:', error)
     res.status(500).json({
       success: false,
       message: 'Erro interno do servidor'
