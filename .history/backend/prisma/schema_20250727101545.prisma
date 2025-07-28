@@ -36,9 +36,6 @@ model Property {
   latitude    Float
   longitude   Float
   area        Float // em hectares
-  matriculaImovel String? // Matrícula do Imóvel (PDF)
-  car         String? // CAR - Cadastro Ambiental Rural (PDF)
-  georreferenciamento String? // Georreferenciamento (PDF)
   status      PropertyStatus @default(PENDING)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

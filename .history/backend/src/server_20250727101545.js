@@ -23,9 +23,6 @@ app.use('/api/tokens', require('./routes/tokens'))
 app.use('/api/transactions', require('./routes/transactions'))
 app.use('/api/users', require('./routes/users'))
 
-// Servir arquivos PDF
-app.use('/uploads', express.static('uploads'))
-
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ 
