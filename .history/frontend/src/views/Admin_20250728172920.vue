@@ -356,7 +356,11 @@ const formatDate = (dateString) => {
 
 const openPDF = async (propertyId, documentType) => {
   try {
+    const token = localStorage.getItem('token')
     const response = await api.get(`/api/properties/${propertyId}/${documentType}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
       responseType: 'blob'
     })
 

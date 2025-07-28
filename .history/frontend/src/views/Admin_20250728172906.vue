@@ -299,7 +299,12 @@ const loadProperties = async () => {
 
 const loadOwners = async () => {
   try {
-    const response = await api.get('/api/users?role=PROPERTY_OWNER')
+    const token = localStorage.getItem('token')
+    const response = await api.get('/api/users?role=PROPERTY_OWNER', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
 
     if (response.data.success) {
       owners.value = response.data.data
@@ -311,8 +316,13 @@ const loadOwners = async () => {
 
 const updatePropertyStatus = async (propertyId, newStatus) => {
   try {
+    const token = localStorage.getItem('token')
     const response = await api.put(`/api/properties/${propertyId}/status`, {
       status: newStatus
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     })
 
     if (response.data.success) {
@@ -356,7 +366,11 @@ const formatDate = (dateString) => {
 
 const openPDF = async (propertyId, documentType) => {
   try {
+    const token = localStorage.getItem('token')
     const response = await api.get(`/api/properties/${propertyId}/${documentType}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
       responseType: 'blob'
     })
 
