@@ -77,6 +77,8 @@
               <option value="PENDING">Pendentes</option>
               <option value="APPROVED">Aprovadas</option>
               <option value="REJECTED">Rejeitadas</option>
+              <option value="ACTIVE">Ativas</option>
+              <option value="INACTIVE">Inativas</option>
             </select>
           </div>
           <div>
@@ -150,6 +152,12 @@
                   <!-- Propriedades APROVADAS -->
                   <div v-if="property.status === 'APPROVED'" class="flex space-x-2">
                     <button 
+                      @click="updatePropertyStatus(property.id, 'ACTIVE')"
+                      class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full hover:bg-blue-200"
+                    >
+                      Ativar
+                    </button>
+                    <button 
                       @click="updatePropertyStatus(property.id, 'REJECTED')"
                       class="px-3 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full hover:bg-red-200"
                     >
@@ -164,6 +172,38 @@
                       class="px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full hover:bg-green-200"
                     >
                       Aprovar
+                    </button>
+                  </div>
+
+                  <!-- Propriedades ATIVAS -->
+                  <div v-if="property.status === 'ACTIVE'" class="flex space-x-2">
+                    <button 
+                      @click="updatePropertyStatus(property.id, 'INACTIVE')"
+                      class="px-3 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full hover:bg-yellow-200"
+                    >
+                      Desativar
+                    </button>
+                    <button 
+                      @click="updatePropertyStatus(property.id, 'REJECTED')"
+                      class="px-3 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full hover:bg-red-200"
+                    >
+                      Rejeitar
+                    </button>
+                  </div>
+
+                  <!-- Propriedades INATIVAS -->
+                  <div v-if="property.status === 'INACTIVE'" class="flex space-x-2">
+                    <button 
+                      @click="updatePropertyStatus(property.id, 'ACTIVE')"
+                      class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full hover:bg-blue-200"
+                    >
+                      Ativar
+                    </button>
+                    <button 
+                      @click="updatePropertyStatus(property.id, 'REJECTED')"
+                      class="px-3 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full hover:bg-red-200"
+                    >
+                      Rejeitar
                     </button>
                   </div>
                 </div>
@@ -224,7 +264,12 @@ onMounted(async () => {
   await loadOwners()
   calculateStats()
 
-
+  // Fechar dropdown quando clicar fora
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.dropdown-container')) {
+      activeDropdown.value = null
+    }
+  })
 })
 
 const loadProperties = async () => {
@@ -306,7 +351,9 @@ const getStatusLabel = (status) => {
   const labels = {
     'PENDING': 'Pendente',
     'APPROVED': 'Aprovada',
-    'REJECTED': 'Rejeitada'
+    'REJECTED': 'Rejeitada',
+    'ACTIVE': 'Ativa',
+    'INACTIVE': 'Inativa'
   }
   return labels[status] || status
 }
@@ -315,7 +362,9 @@ const getStatusClass = (status) => {
   const classes = {
     'PENDING': 'px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full',
     'APPROVED': 'px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full',
-    'REJECTED': 'px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full'
+    'REJECTED': 'px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full',
+    'ACTIVE': 'px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full',
+    'INACTIVE': 'px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full'
   }
   return classes[status] || 'px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full'
 }
@@ -325,5 +374,7 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString('pt-BR')
 }
 
-
+const toggleDropdown = (propertyId) => {
+  activeDropdown.value = activeDropdown.value === propertyId ? null : propertyId
+}
 </script> 
