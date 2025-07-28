@@ -61,12 +61,9 @@ const router = createRouter({
 // Guarda de navegação para autenticação
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem('token')
-  const user = JSON.parse(localStorage.getItem('user') || '{}')
   
   if (to.meta.requiresAuth && !isAuthenticated) {
     next('/login')
-  } else if (to.meta.requiresAdmin && user.role !== 'ADMIN') {
-    next('/dashboard')
   } else {
     next()
   }

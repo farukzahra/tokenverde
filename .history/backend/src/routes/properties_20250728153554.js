@@ -188,7 +188,7 @@ router.post('/', upload.fields([
 })
 
 // Atualizar status da propriedade (apenas admin)
-router.put('/:id/status', async (req, res) => {
+router.put('/:id/status', authMiddleware, async (req, res) => {
   try {
     const { status } = req.body
     const propertyId = req.params.id

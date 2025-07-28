@@ -10,6 +10,11 @@ const prisma = new PrismaClient()
 // Aplicar middleware de autenticação em todas as rotas
 router.use(authMiddleware)
 
+// Test route to verify routing is working
+router.get('/test', (req, res) => {
+  res.json({ message: 'Properties route is working' })
+})
+
 // Configuração do Multer para upload de PDFs (memória)
 const upload = multer({
   storage: multer.memoryStorage(),

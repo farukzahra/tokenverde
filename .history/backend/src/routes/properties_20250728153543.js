@@ -28,15 +28,7 @@ const upload = multer({
 // Listar propriedades
 router.get('/', async (req, res) => {
   try {
-    const { status, ownerId } = req.query
-    
-    // Construir filtros
-    const where = {}
-    if (status) where.status = status
-    if (ownerId) where.ownerId = ownerId
-
     const properties = await prisma.property.findMany({
-      where,
       include: {
         owner: {
           select: {
@@ -47,9 +39,6 @@ router.get('/', async (req, res) => {
         },
         greenAreas: true,
         tokens: true
-      },
-      orderBy: {
-        createdAt: 'desc'
       }
     })
 
@@ -188,7 +177,7 @@ router.post('/', upload.fields([
 })
 
 // Atualizar status da propriedade (apenas admin)
-router.put('/:id/status', async (req, res) => {
+router.put('/:id/status', authMiddleware, async (req, res) => {
   try {
     const { status } = req.body
     const propertyId = req.params.id
