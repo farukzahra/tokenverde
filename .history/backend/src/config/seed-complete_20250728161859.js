@@ -97,18 +97,6 @@ async function createProperties(users) {
   const propertyOwners = users.filter(u => u.role === 'PROPERTY_OWNER')
   const properties = []
   
-  // Ler arquivo PDF de teste
-  const pdfPath = path.join(__dirname, '../../test.pdf')
-  let pdfBase64 = null
-  
-  try {
-    const pdfBuffer = fs.readFileSync(pdfPath)
-    pdfBase64 = pdfBuffer.toString('base64')
-    console.log('✅ Arquivo PDF carregado com sucesso')
-  } catch (error) {
-    console.log('⚠️  Arquivo PDF não encontrado, criando propriedades sem anexo')
-  }
-  
   for (let i = 0; i < propertyOwners.length; i++) {
     const owner = propertyOwners[i]
     
@@ -122,7 +110,7 @@ async function createProperties(users) {
         area: 150.0 + (i * 25),
         status: 'PENDING',
         ownerId: owner.id,
-        matriculaImovel: pdfBase64
+        documents: ['test.pdf']
       }
     })
     
