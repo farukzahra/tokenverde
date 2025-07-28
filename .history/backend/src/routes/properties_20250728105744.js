@@ -261,7 +261,27 @@ router.delete('/:id', async (req, res) => {
       })
     }
 
-    // Deletar propriedade (PDFs são deletados automaticamente com o registro)
+    // Deletar arquivos PDF se existirem
+    const uploadDir = './uploads/properties'
+    if (property.matriculaImovel) {
+      const filePath = path.join(uploadDir, property.matriculaImovel)
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath)
+      }
+    }
+    if (property.car) {
+      const filePath = path.join(uploadDir, property.car)
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath)
+      }
+    }
+    if (property.georreferenciamento) {
+      const filePath = path.join(uploadDir, property.georreferenciamento)
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath)
+      }
+    }
+
     await prisma.property.delete({
       where: { id }
     })

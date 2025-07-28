@@ -194,7 +194,7 @@ router.put('/:id', upload.fields([
       })
     }
 
-    // Processar arquivos PDF como Base64 (apenas se enviados)
+    // Processar arquivos PDF (apenas se enviados)
     const files = req.files
     const updateData = {
       name,
@@ -206,13 +206,13 @@ router.put('/:id', upload.fields([
     }
 
     if (files.matriculaImovel) {
-      updateData.matriculaImovel = files.matriculaImovel[0].buffer.toString('base64')
+      updateData.matriculaImovel = files.matriculaImovel[0].filename
     }
     if (files.car) {
-      updateData.car = files.car[0].buffer.toString('base64')
+      updateData.car = files.car[0].filename
     }
     if (files.georreferenciamento) {
-      updateData.georreferenciamento = files.georreferenciamento[0].buffer.toString('base64')
+      updateData.georreferenciamento = files.georreferenciamento[0].filename
     }
 
     const property = await prisma.property.update({
@@ -261,7 +261,27 @@ router.delete('/:id', async (req, res) => {
       })
     }
 
-    // Deletar propriedade (PDFs são deletados automaticamente com o registro)
+    // Deletar arquivos PDF se existirem
+    const uploadDir = './uploads/properties'
+    if (property.matriculaImovel) {
+      const filePath = path.join(uploadDir, property.matriculaImovel)
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath)
+      }
+    }
+    if (property.car) {
+      const filePath = path.join(uploadDir, property.car)
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath)
+      }
+    }
+    if (property.georreferenciamento) {
+      const filePath = path.join(uploadDir, property.georreferenciamento)
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath)
+      }
+    }
+
     await prisma.property.delete({
       where: { id }
     })
