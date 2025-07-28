@@ -32,12 +32,6 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: () => import('../views/Register.vue')
-  },
-  {
-    path: '/property-form',
-    name: 'PropertyForm',
-    component: () => import('../views/PropertyForm.vue'),
-    meta: { requiresAuth: true }
   }
 ]
 
