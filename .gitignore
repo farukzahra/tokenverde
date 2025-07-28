@@ -103,4 +103,9 @@ jspm_packages/
 
 # Temporary files
 tmp/
-temp/ 
+temp/
+
+# Data export files
+tokenverde_export.json
+tokenverde_import.sql
+export-data.js 
