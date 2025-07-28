@@ -69,7 +69,7 @@
               :key="property.id"
               class="border rounded-lg p-4 hover:bg-gray-50"
             >
-              <div class="flex justify-between items-start mb-3">
+              <div class="flex justify-between items-start">
                 <div>
                   <h3 class="font-medium text-gray-900">{{ property.name }}</h3>
                   <p class="text-sm text-gray-600">{{ property.address }}</p>
@@ -78,26 +78,6 @@
                 <span :class="getStatusClass(property.status)">
                   {{ getStatusLabel(property.status) }}
                 </span>
-              </div>
-              <div class="flex space-x-2">
-                <button 
-                  @click="$router.push(`/property-edit/${property.id}`)"
-                  class="text-blue-600 hover:text-blue-900 text-sm font-medium"
-                >
-                  Editar
-                </button>
-                <button 
-                  v-if="property.status === 'PENDING'"
-                  class="text-yellow-600 hover:text-yellow-900 text-sm font-medium"
-                >
-                  Aguardando Aprovação
-                </button>
-                <button 
-                  v-if="property.status === 'REJECTED'"
-                  class="text-red-600 hover:text-red-900 text-sm font-medium"
-                >
-                  Rejeitada
-                </button>
               </div>
             </div>
           </div>
