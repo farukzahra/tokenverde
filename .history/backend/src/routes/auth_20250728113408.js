@@ -32,7 +32,7 @@ router.post('/register', [
       })
     }
 
-    const { name, email, password, role = 'INVESTIDOR' } = req.body
+    const { name, email, password, role = 'INVESTOR' } = req.body
 
     // Verificar se o email já existe
     const existingUser = await prisma.user.findUnique({

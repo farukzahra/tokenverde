@@ -13,8 +13,7 @@
     "db:migrate": "prisma migrate dev",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",
-    "db:seed": "node src/config/seed.js",
-    "db:seed:complete": "node src/config/seed-complete.js"
+    "db:seed": "node src/config/seed.js"
   },
   "dependencies": {
     "express": "^4.18.2",
