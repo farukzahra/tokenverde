@@ -154,7 +154,7 @@
                   >
                     Ativar
                   </button>
-                  <div class="relative dropdown-container">
+                  <div class="relative">
                     <button 
                       @click="toggleDropdown(property.id)"
                       class="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200"

@@ -154,7 +154,7 @@
                   >
                     Ativar
                   </button>
-                  <div class="relative dropdown-container">
+                  <div class="relative">
                     <button 
                       @click="toggleDropdown(property.id)"
                       class="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200"
@@ -254,13 +254,6 @@ onMounted(async () => {
   await loadProperties()
   await loadOwners()
   calculateStats()
-
-  // Fechar dropdown quando clicar fora
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.dropdown-container')) {
-      activeDropdown.value = null
-    }
-  })
 })
 
 const loadProperties = async () => {
@@ -363,9 +356,5 @@ const getStatusClass = (status) => {
 const formatDate = (dateString) => {
   if (!dateString) return '-'
   return new Date(dateString).toLocaleDateString('pt-BR')
-}
-
-const toggleDropdown = (propertyId) => {
-  activeDropdown.value = activeDropdown.value === propertyId ? null : propertyId
 }
 </script> 

@@ -154,22 +154,12 @@
                   >
                     Ativar
                   </button>
-                  <div class="relative dropdown-container">
-                    <button 
-                      @click="toggleDropdown(property.id)"
-                      class="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200"
-                    >
-                      ⋯
-                    </button>
-                    <div v-if="activeDropdown === property.id" class="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-10">
-                      <button 
-                        @click="updatePropertyStatus(property.id, 'REJECTED'); activeDropdown = null"
-                        class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
-                      >
-                        Rejeitar
-                      </button>
-                    </div>
-                  </div>
+                  <button 
+                    @click="updatePropertyStatus(property.id, 'REJECTED')"
+                    class="px-3 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full hover:bg-red-200"
+                  >
+                    Rejeitar
+                  </button>
                 </div>
                 
                 <div v-else-if="property.status === 'ACTIVE'" class="flex space-x-2">
@@ -225,7 +215,6 @@ const user = reactive({})
 const loading = ref(false)
 const properties = ref([])
 const owners = ref([])
-const activeDropdown = ref(null)
 
 const stats = reactive({
   pending: 0,
@@ -254,13 +243,6 @@ onMounted(async () => {
   await loadProperties()
   await loadOwners()
   calculateStats()
-
-  // Fechar dropdown quando clicar fora
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.dropdown-container')) {
-      activeDropdown.value = null
-    }
-  })
 })
 
 const loadProperties = async () => {
@@ -363,9 +345,5 @@ const getStatusClass = (status) => {
 const formatDate = (dateString) => {
   if (!dateString) return '-'
   return new Date(dateString).toLocaleDateString('pt-BR')
-}
-
-const toggleDropdown = (propertyId) => {
-  activeDropdown.value = activeDropdown.value === propertyId ? null : propertyId
 }
 </script> 
