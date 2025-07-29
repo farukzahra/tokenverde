@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Backend TokenVerde</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .info {
+            color: blue;
+            font-weight: bold;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Teste Backend TokenVerde</h1>
+        
+        <div>
+            <button class="button" onclick="testBackend()">🌐 Testar Backend</button>
+            <button class="button" onclick="testLogin()">🔐 Testar Login</button>
+            <button class="button" onclick="testSetup()">⚙️ Testar Setup</button>
+        </div>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'https://tokenverde-backend.onrender.com';
+        
+        function showResult(message, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            const className = type === 'success' ? 'success' : type === 'error' ? 'error' : 'info';
+            resultDiv.innerHTML = `<div class="${className}">${message}</div>`;
+        }
+        
+        async function testBackend() {
+            try {
+                showResult('🔄 Testando conexão com o backend...');
+                
+                const response = await fetch(`${BACKEND_URL}/`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showResult(`✅ Backend funcionando!\n\nResposta: ${JSON.stringify(data, null, 2)}`, 'success');
+                } else {
+                    showResult(`❌ Backend respondeu com status ${response.status}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Erro ao conectar com backend:\n${error.message}`, 'error');
+            }
+        }
+        
+        async function testLogin() {
+            try {
+                showResult('🔄 Testando login...');
+                
+                const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: 'admin@tokenverde.com',
+                        password: 'admin123'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showResult(`✅ Login funcionando!\n\nResposta: ${JSON.stringify(data, null, 2)}`, 'success');
+                } else {
+                    const errorData = await response.json();
+                    showResult(`❌ Login falhou: ${JSON.stringify(errorData, null, 2)}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Erro no login:\n${error.message}`, 'error');
+            }
+        }
+        
+        async function testSetup() {
+            try {
+                showResult('🔄 Testando setup...');
+                
+                const response = await fetch(`${BACKEND_URL}/api/setup/check-tables`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showResult(`✅ Setup funcionando!\n\nResposta: ${JSON.stringify(data, null, 2)}`, 'success');
+                } else {
+                    const errorData = await response.json();
+                    showResult(`❌ Setup falhou: ${JSON.stringify(errorData, null, 2)}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Erro no setup:\n${error.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html> 
