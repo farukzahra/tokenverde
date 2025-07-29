@@ -98,7 +98,7 @@ const form = reactive({
   email: '',
   password: '',
   confirmPassword: '',
-  role: 'INVESTIDOR'
+  role: 'INVESTOR'
 })
 
 const loading = ref(false)
