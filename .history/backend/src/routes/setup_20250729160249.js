@@ -252,7 +252,7 @@ router.post('/create-admin', async (req, res) => {
     const hashedPassword = await bcrypt.hash('admin123', 10)
     const admin = await prisma.user.create({
       data: {
-        id: generateUUID(),
+        id: uuidv4(),
         email: 'admin@tokenverde.com',
         password: hashedPassword,
         name: 'Administrador',
