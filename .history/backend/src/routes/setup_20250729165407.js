@@ -108,7 +108,7 @@ router.post('/create-tables', async (req, res) => {
     
     // Criar tabela tokens
     await prisma.$executeRaw`
-      CREATE TABLE "tokens" (
+      CREATE TABLE IF NOT EXISTS "tokens" (
         "id" TEXT NOT NULL,
         "name" TEXT NOT NULL,
         "symbol" TEXT NOT NULL,
@@ -125,7 +125,7 @@ router.post('/create-tables', async (req, res) => {
     
     // Criar tabela token_holders
     await prisma.$executeRaw`
-      CREATE TABLE "token_holders" (
+      CREATE TABLE IF NOT EXISTS "token_holders" (
         "id" TEXT NOT NULL,
         "quantity" INTEGER NOT NULL,
         "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -138,7 +138,7 @@ router.post('/create-tables', async (req, res) => {
     
     // Criar tabela transactions
     await prisma.$executeRaw`
-      CREATE TABLE "transactions" (
+      CREATE TABLE IF NOT EXISTS "transactions" (
         "id" TEXT NOT NULL,
         "type" "TransactionType" NOT NULL,
         "amount" DOUBLE PRECISION NOT NULL,
@@ -154,7 +154,7 @@ router.post('/create-tables', async (req, res) => {
     
     // Criar tabela environmental_reports
     await prisma.$executeRaw`
-      CREATE TABLE "environmental_reports" (
+      CREATE TABLE IF NOT EXISTS "environmental_reports" (
         "id" TEXT NOT NULL,
         "title" TEXT NOT NULL,
         "description" TEXT NOT NULL,

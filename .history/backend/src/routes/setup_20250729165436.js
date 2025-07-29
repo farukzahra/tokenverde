@@ -154,7 +154,7 @@ router.post('/create-tables', async (req, res) => {
     
     // Criar tabela environmental_reports
     await prisma.$executeRaw`
-      CREATE TABLE "environmental_reports" (
+      CREATE TABLE IF NOT EXISTS "environmental_reports" (
         "id" TEXT NOT NULL,
         "title" TEXT NOT NULL,
         "description" TEXT NOT NULL,
