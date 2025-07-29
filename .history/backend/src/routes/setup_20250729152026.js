@@ -23,28 +23,6 @@ router.post('/create-tables', async (req, res) => {
   try {
     console.log('🔧 Iniciando criação das tabelas...')
     
-    // Verificar se tabelas já existem
-    const existingTables = await prisma.$queryRaw`
-      SELECT table_name 
-      FROM information_schema.tables 
-      WHERE table_schema = 'public' 
-      AND table_name IN ('users', 'properties', 'green_areas', 'tokens', 'token_holders', 'transactions', 'environmental_reports')
-    `
-    
-    if (existingTables.length > 0) {
-      console.log('✅ Tabelas já existem, pulando criação...')
-      const seedSuccess = await runSeed()
-      return res.json({
-        success: true,
-        message: '✅ Tabelas já existem!',
-        seedSuccess,
-        details: {
-          existingTables: existingTables.map(t => t.table_name),
-          seed: seedSuccess ? '✅ Dados inseridos com sucesso' : '❌ Erro ao inserir dados'
-        }
-      })
-    }
-    
     // Criar ENUMs
     await prisma.$executeRaw`DO $$ BEGIN CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'INVESTIDOR', 'PROPERTY_OWNER'); EXCEPTION WHEN duplicate_object THEN null; END $$`
     await prisma.$executeRaw`DO $$ BEGIN CREATE TYPE "PropertyStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'ACTIVE', 'INACTIVE'); EXCEPTION WHEN duplicate_object THEN null; END $$`
@@ -57,7 +35,7 @@ router.post('/create-tables', async (req, res) => {
     
     // Criar tabela users
     await prisma.$executeRaw`
-      CREATE TABLE "users" (
+      CREATE TABLE IF NOT EXISTS "users" (
         "id" TEXT NOT NULL,
         "email" TEXT NOT NULL,
         "password" TEXT NOT NULL,
