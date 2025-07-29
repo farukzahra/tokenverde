@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,83 +8,75 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String
-  role      UserRole @default(INVESTIDOR)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  properties    Property[]
-  transactions  Transaction[]
-  tokenHolders  TokenHolder[]
-  reports       EnvironmentalReport[]
+  id           String                @id @default(cuid())
+  email        String                @unique
+  password     String
+  name         String
+  role         UserRole              @default(INVESTIDOR)
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  reports      EnvironmentalReport[]
+  properties   Property[]
+  tokenHolders TokenHolder[]
+  transactions Transaction[]
 
   @@map("users")
 }
 
 model Property {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  address     String
-  latitude    Float
-  longitude   Float
-  area        Float // em hectares
-  matriculaImovel String? // Matrícula do Imóvel (PDF) - Base64
-  car         String? // CAR - Cadastro Ambiental Rural (PDF) - Base64
-  georreferenciamento String? // Georreferenciamento (PDF) - Base64
-  status      PropertyStatus @default(PENDING)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  ownerId     String
-  owner       User     @relation(fields: [ownerId], references: [id])
-  greenAreas  GreenArea[]
-  tokens      Token[]
+  id                  String         @id @default(cuid())
+  name                String
+  description         String?
+  address             String
+  latitude            Float
+  longitude           Float
+  area                Float
+  matriculaImovel     String?
+  car                 String?
+  georreferenciamento String?
+  status              PropertyStatus @default(PENDING)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  ownerId             String
+  greenAreas          GreenArea[]
+  owner               User           @relation(fields: [ownerId], references: [id])
+  tokens              Token[]
 
   @@map("properties")
 }
 
 model GreenArea {
-  id          String   @id @default(cuid())
+  id          String                @id @default(cuid())
   name        String
   description String?
-  area        Float // em hectares
-  coordinates Json     // Array de coordenadas
-  status      GreenAreaStatus @default(ACTIVE)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
+  area        Float
+  coordinates Json
+  status      GreenAreaStatus       @default(ACTIVE)
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
   propertyId  String
-  property    Property @relation(fields: [propertyId], references: [id])
-  tokens      Token[]
   reports     EnvironmentalReport[]
+  property    Property              @relation(fields: [propertyId], references: [id])
+  tokens      Token[]
 
   @@map("green_areas")
 }
 
 model Token {
-  id          String   @id @default(cuid())
-  name        String
-  symbol      String
-  totalSupply Int
-  price       Float
-  status      TokenStatus @default(ACTIVE)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  greenAreaId String
-  greenArea   GreenArea @relation(fields: [greenAreaId], references: [id])
-  propertyId  String
-  property    Property @relation(fields: [propertyId], references: [id])
+  id           String        @id @default(cuid())
+  name         String
+  symbol       String
+  totalSupply  Int
+  price        Float
+  status       TokenStatus   @default(ACTIVE)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  greenAreaId  String
+  propertyId   String
+  holders      TokenHolder[]
+  greenArea    GreenArea     @relation(fields: [greenAreaId], references: [id])
+  property     Property      @relation(fields: [propertyId], references: [id])
   transactions Transaction[]
-  holders     TokenHolder[]
 
   @@map("tokens")
 }
@@ -97,53 +86,46 @@ model TokenHolder {
   quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  // Relations
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
   tokenId   String
   token     Token    @relation(fields: [tokenId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, tokenId])
   @@map("token_holders")
 }
 
 model Transaction {
-  id          String   @id @default(cuid())
-  type        TransactionType
-  amount      Float
-  quantity    Int
-  status      TransactionStatus @default(PENDING)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  tokenId     String
-  token       Token    @relation(fields: [tokenId], references: [id])
+  id        String            @id @default(cuid())
+  type      TransactionType
+  amount    Float
+  quantity  Int
+  status    TransactionStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  userId    String
+  tokenId   String
+  token     Token             @relation(fields: [tokenId], references: [id])
+  user      User              @relation(fields: [userId], references: [id])
 
   @@map("transactions")
 }
 
 model EnvironmentalReport {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
   description String
-  data        Json     // Dados do relatório
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
+  data        Json
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   greenAreaId String
-  greenArea   GreenArea @relation(fields: [greenAreaId], references: [id])
   authorId    String
-  author      User     @relation(fields: [authorId], references: [id])
+  author      User      @relation(fields: [authorId], references: [id])
+  greenArea   GreenArea @relation(fields: [greenAreaId], references: [id])
 
   @@map("environmental_reports")
 }
 
-// Enums
 enum UserRole {
   ADMIN
   INVESTIDOR
@@ -181,4 +163,4 @@ enum TransactionStatus {
   COMPLETED
   FAILED
   CANCELLED
-} 
+}

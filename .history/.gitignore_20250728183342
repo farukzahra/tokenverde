@@ -106,6 +106,6 @@ tmp/
 temp/
 
 # Data export files
-*.sql
-*.json
-export-*.js 
+tokenverde_export.json
+tokenverde_import.sql
+export-data.js 

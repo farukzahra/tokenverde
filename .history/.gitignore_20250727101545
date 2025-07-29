@@ -103,9 +103,4 @@ jspm_packages/
 
 # Temporary files
 tmp/
-temp/
-
-# Data export files
-*.sql
-*.json
-export-*.js 
+temp/ 
