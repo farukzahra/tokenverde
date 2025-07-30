@@ -1,18 +1,19 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="flex justify-between items-center mb-8">
-        <div class="flex items-center space-x-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 space-y-4 sm:space-y-0">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
           <button 
             @click="$router.push('/dashboard')"
-            class="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+            class="flex items-center space-x-2 px-3 sm:px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
             <span>Voltar ao Dashboard</span>
           </button>
-          <h1 class="text-3xl font-bold text-gray-900">Painel Administrativo</h1>
+          <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Painel Administrativo</h1>
         </div>
         <div class="text-sm text-gray-600">
           Administrador: <span class="font-medium">{{ user.name }}</span>
@@ -20,59 +21,59 @@
       </div>
 
       <!-- Cards de Resumo -->
-      <div class="grid md:grid-cols-4 gap-6 mb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <div class="card">
           <div class="flex items-center">
-            <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="p-2 sm:p-3 rounded-full bg-yellow-100 text-yellow-600">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
-            <div class="ml-4">
-              <h3 class="text-lg font-semibold text-gray-900">Pendentes</h3>
-              <p class="text-2xl font-bold text-yellow-600">{{ stats.pending }}</p>
+            <div class="ml-3 sm:ml-4">
+              <h3 class="text-base sm:text-lg font-semibold text-gray-900">Pendentes</h3>
+              <p class="text-xl sm:text-2xl font-bold text-yellow-600">{{ stats.pending }}</p>
             </div>
           </div>
         </div>
 
         <div class="card">
           <div class="flex items-center">
-            <div class="p-3 rounded-full bg-green-100 text-green-600">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="p-2 sm:p-3 rounded-full bg-green-100 text-green-600">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
-            <div class="ml-4">
-              <h3 class="text-lg font-semibold text-gray-900">Aprovadas</h3>
-              <p class="text-2xl font-bold text-green-600">{{ stats.approved }}</p>
+            <div class="ml-3 sm:ml-4">
+              <h3 class="text-base sm:text-lg font-semibold text-gray-900">Aprovadas</h3>
+              <p class="text-xl sm:text-2xl font-bold text-green-600">{{ stats.approved }}</p>
             </div>
           </div>
         </div>
 
         <div class="card">
           <div class="flex items-center">
-            <div class="p-3 rounded-full bg-red-100 text-red-600">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="p-2 sm:p-3 rounded-full bg-red-100 text-red-600">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             </div>
-            <div class="ml-4">
-              <h3 class="text-lg font-semibold text-gray-900">Rejeitadas</h3>
-              <p class="text-2xl font-bold text-red-600">{{ stats.rejected }}</p>
+            <div class="ml-3 sm:ml-4">
+              <h3 class="text-base sm:text-lg font-semibold text-gray-900">Rejeitadas</h3>
+              <p class="text-xl sm:text-2xl font-bold text-red-600">{{ stats.rejected }}</p>
             </div>
           </div>
         </div>
 
-        <div class="card">
+        <div class="card sm:col-span-2 lg:col-span-1">
           <div class="flex items-center">
-            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="p-2 sm:p-3 rounded-full bg-blue-100 text-blue-600">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
               </svg>
             </div>
-            <div class="ml-4">
-              <h3 class="text-lg font-semibold text-gray-900">Total</h3>
-              <p class="text-2xl font-bold text-blue-600">{{ stats.total }}</p>
+            <div class="ml-3 sm:ml-4">
+              <h3 class="text-base sm:text-lg font-semibold text-gray-900">Total</h3>
+              <p class="text-xl sm:text-2xl font-bold text-blue-600">{{ stats.total }}</p>
             </div>
           </div>
         </div>
@@ -80,19 +81,19 @@
 
       <!-- Filtros -->
       <div class="card mb-6">
-        <div class="flex flex-wrap gap-4">
-          <div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <div class="flex-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-            <select v-model="filters.status" class="input-field">
+            <select v-model="filters.status" class="input-field text-sm sm:text-base">
               <option value="">Todos</option>
               <option value="PENDING">Pendentes</option>
               <option value="APPROVED">Aprovadas</option>
               <option value="REJECTED">Rejeitadas</option>
             </select>
           </div>
-          <div>
+          <div class="flex-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Proprietário</label>
-            <select v-model="filters.owner" class="input-field">
+            <select v-model="filters.owner" class="input-field text-sm sm:text-base">
               <option value="">Todos</option>
               <option v-for="owner in owners" :key="owner.id" :value="owner.id">
                 {{ owner.name }}
@@ -100,7 +101,7 @@
             </select>
           </div>
           <div class="flex items-end">
-            <button @click="loadProperties" class="btn-primary">
+            <button @click="loadProperties" class="btn-primary text-sm sm:text-base w-full sm:w-auto">
               Filtrar
             </button>
           </div>
@@ -109,14 +110,14 @@
 
       <!-- Lista de Propriedades -->
       <div class="card">
-        <h2 class="text-xl font-semibold text-gray-900 mb-4">Propriedades</h2>
+        <h2 class="text-lg sm:text-xl font-semibold text-gray-900 mb-4">Propriedades</h2>
         
         <div v-if="loading" class="text-center py-8">
-          <p class="text-gray-600">Carregando propriedades...</p>
+          <p class="text-gray-600 text-sm sm:text-base">Carregando propriedades...</p>
         </div>
 
         <div v-else-if="properties.length === 0" class="text-center py-8">
-          <p class="text-gray-600">Nenhuma propriedade encontrada</p>
+          <p class="text-gray-600 text-sm sm:text-base">Nenhuma propriedade encontrada</p>
         </div>
 
         <div v-else class="space-y-4">
@@ -125,21 +126,21 @@
             :key="property.id"
             class="border rounded-lg p-4 hover:bg-gray-50"
           >
-            <div class="flex justify-between items-start">
+            <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start space-y-4 lg:space-y-0">
               <div class="flex-1">
-                <div class="flex items-center space-x-3 mb-2">
-                  <h3 class="font-medium text-gray-900">{{ property.name }}</h3>
-                  <span :class="getStatusClass(property.status)">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mb-2 space-y-2 sm:space-y-0">
+                  <h3 class="font-medium text-gray-900 text-sm sm:text-base">{{ property.name }}</h3>
+                  <span :class="getStatusClass(property.status)" class="text-xs">
                     {{ getStatusLabel(property.status) }}
                   </span>
                 </div>
-                <p class="text-sm text-gray-600 mb-1">{{ property.address }}</p>
-                <p class="text-sm text-gray-600 mb-2">{{ property.area }} hectares</p>
-                <p class="text-sm text-gray-500">Proprietário: {{ property.owner.name }}</p>
-                <p class="text-sm text-gray-500">Cadastrada em: {{ formatDate(property.createdAt) }}</p>
+                <p class="text-xs sm:text-sm text-gray-600 mb-1">{{ property.address }}</p>
+                <p class="text-xs sm:text-sm text-gray-600 mb-2">{{ property.area }} hectares</p>
+                <p class="text-xs sm:text-sm text-gray-500">Proprietário: {{ property.owner.name }}</p>
+                <p class="text-xs sm:text-sm text-gray-500">Cadastrada em: {{ formatDate(property.createdAt) }}</p>
                 
                 <!-- Links para documentos -->
-                <div class="flex space-x-2 mt-2">
+                <div class="flex flex-wrap gap-2 mt-2">
                   <button 
                     v-if="property.matriculaImovel"
                     @click="openPDF(property.id, 'matricula')"
@@ -173,40 +174,41 @@
                 </div>
               </div>
               
-              <div class="flex items-center space-x-2">
+              <!-- Ações -->
+              <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
                 <!-- Ações por status -->
-                <div class="flex space-x-2">
+                <div class="flex flex-wrap gap-2 w-full sm:w-auto">
                   <!-- Propriedades PENDENTES -->
-                  <div v-if="property.status === 'PENDING'" class="flex space-x-2">
+                  <div v-if="property.status === 'PENDING'" class="flex flex-wrap gap-2 w-full sm:w-auto">
                     <button 
                       @click="updatePropertyStatus(property.id, 'APPROVED')"
-                      class="px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full hover:bg-green-200"
+                      class="px-3 py-2 text-xs sm:text-sm font-medium bg-green-100 text-green-800 rounded-full hover:bg-green-200 w-full sm:w-auto"
                     >
                       Aprovar
                     </button>
                     <button 
                       @click="updatePropertyStatus(property.id, 'REJECTED')"
-                      class="px-3 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full hover:bg-red-200"
+                      class="px-3 py-2 text-xs sm:text-sm font-medium bg-red-100 text-red-800 rounded-full hover:bg-red-200 w-full sm:w-auto"
                     >
                       Rejeitar
                     </button>
                   </div>
 
                   <!-- Propriedades APROVADAS -->
-                  <div v-if="property.status === 'APPROVED'" class="flex space-x-2">
+                  <div v-if="property.status === 'APPROVED'" class="flex flex-wrap gap-2 w-full sm:w-auto">
                     <button 
                       @click="updatePropertyStatus(property.id, 'REJECTED')"
-                      class="px-3 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full hover:bg-red-200"
+                      class="px-3 py-2 text-xs sm:text-sm font-medium bg-red-100 text-red-800 rounded-full hover:bg-red-200 w-full sm:w-auto"
                     >
                       Rejeitar
                     </button>
                   </div>
 
                   <!-- Propriedades REJEITADAS -->
-                  <div v-if="property.status === 'REJECTED'" class="flex space-x-2">
+                  <div v-if="property.status === 'REJECTED'" class="flex flex-wrap gap-2 w-full sm:w-auto">
                     <button 
                       @click="updatePropertyStatus(property.id, 'APPROVED')"
-                      class="px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full hover:bg-green-200"
+                      class="px-3 py-2 text-xs sm:text-sm font-medium bg-green-100 text-green-800 rounded-full hover:bg-green-200 w-full sm:w-auto"
                     >
                       Aprovar
                     </button>
@@ -216,7 +218,7 @@
                 <!-- Botão Editar -->
                 <button 
                   @click="$router.push(`/property-edit/${property.id}`)"
-                  class="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200"
+                  class="px-3 py-2 text-xs sm:text-sm font-medium bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 w-full sm:w-auto"
                 >
                   Editar
                 </button>
