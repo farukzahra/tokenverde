@@ -1,16 +1,16 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex items-center justify-center">
-    <div class="max-w-md w-full">
+  <div class="min-h-screen bg-gray-50 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">
+    <div class="w-full max-w-sm sm:max-w-md">
       <div class="card">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Cadastro</h2>
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">Cadastro</h2>
         
         <!-- Mensagem de sucesso -->
-        <div v-if="successMessage" class="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+        <div v-if="successMessage" class="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded text-sm">
           {{ successMessage }}
         </div>
         
         <!-- Mensagem de erro -->
-        <div v-if="errorMessage" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+        <div v-if="errorMessage" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
           {{ errorMessage }}
         </div>
         
@@ -20,7 +20,7 @@
             <input 
               v-model="form.name" 
               type="text" 
-              class="input-field" 
+              class="input-field text-sm sm:text-base" 
               placeholder="Seu nome completo"
               required
             >
@@ -31,7 +31,7 @@
             <input 
               v-model="form.email" 
               type="email" 
-              class="input-field" 
+              class="input-field text-sm sm:text-base" 
               placeholder="seu@email.com"
               required
             >
@@ -42,7 +42,7 @@
             <input 
               v-model="form.password" 
               type="password" 
-              class="input-field" 
+              class="input-field text-sm sm:text-base" 
               placeholder="••••••••"
               required
             >
@@ -53,7 +53,7 @@
             <input 
               v-model="form.confirmPassword" 
               type="password" 
-              class="input-field" 
+              class="input-field text-sm sm:text-base" 
               placeholder="••••••••"
               required
             >
@@ -61,7 +61,7 @@
           
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Usuário</label>
-            <select v-model="form.role" class="input-field" required>
+            <select v-model="form.role" class="input-field text-sm sm:text-base" required>
               <option value="INVESTIDOR">Investidor</option>
               <option value="PROPERTY_OWNER">Proprietário de Terreno</option>
             </select>
@@ -69,7 +69,7 @@
           
           <button 
             type="submit" 
-            class="btn-primary w-full"
+            class="btn-primary w-full text-sm sm:text-base py-3"
             :disabled="loading"
           >
             <span v-if="loading">Cadastrando...</span>
@@ -77,7 +77,7 @@
           </button>
         </form>
         
-        <p class="text-center mt-4 text-gray-600">
+        <p class="text-center mt-4 text-gray-600 text-sm sm:text-base">
           Já tem uma conta? 
           <router-link to="/login" class="text-tokenverde-600 hover:underline">Faça login</router-link>
         </p>

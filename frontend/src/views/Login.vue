@@ -1,16 +1,16 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex items-center justify-center">
-    <div class="max-w-md w-full">
+  <div class="min-h-screen bg-gray-50 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-sm sm:max-w-md">
       <div class="card">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Login</h2>
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">Login</h2>
         
         <!-- Mensagem de sucesso -->
-        <div v-if="successMessage" class="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+        <div v-if="successMessage" class="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded text-sm">
           {{ successMessage }}
         </div>
         
         <!-- Mensagem de erro -->
-        <div v-if="errorMessage" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+        <div v-if="errorMessage" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
           {{ errorMessage }}
         </div>
         
@@ -20,7 +20,7 @@
             <input 
               v-model="form.email" 
               type="email" 
-              class="input-field" 
+              class="input-field text-sm sm:text-base" 
               placeholder="seu@email.com"
               required
             >
@@ -31,7 +31,7 @@
             <input 
               v-model="form.password" 
               type="password" 
-              class="input-field" 
+              class="input-field text-sm sm:text-base" 
               placeholder="••••••••"
               required
             >
@@ -39,7 +39,7 @@
           
           <button 
             type="submit" 
-            class="btn-primary w-full"
+            class="btn-primary w-full text-sm sm:text-base py-3"
             :disabled="loading"
           >
             <span v-if="loading">Entrando...</span>
@@ -47,7 +47,7 @@
           </button>
         </form>
         
-        <p class="text-center mt-4 text-gray-600">
+        <p class="text-center mt-4 text-gray-600 text-sm sm:text-base">
           Não tem uma conta? 
           <router-link to="/register" class="text-tokenverde-600 hover:underline">Cadastre-se</router-link>
         </p>

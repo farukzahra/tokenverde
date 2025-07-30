@@ -108,4 +108,7 @@ temp/
 # Data export files
 *.sql
 *.json
-export-*.js 
+export-*.js
+
+# History files (Cursor/VS Code)
+.history/ 
