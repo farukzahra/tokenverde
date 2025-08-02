@@ -1,30 +1,32 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-tokenverde-50 to-tokenverde-100">
+  <div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <header class="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-4 sm:py-6">
           <!-- Logo -->
           <div class="flex items-center">
-            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-tokenverde-600 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-600 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
               <span class="text-white font-bold text-lg sm:text-xl">T</span>
             </div>
             <h1 class="ml-2 sm:ml-3 text-xl sm:text-2xl font-bold text-gray-900">TokenVerde</h1>
           </div>
 
           <!-- Desktop Navigation -->
-          <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            <router-link to="/" class="text-gray-900 hover:text-tokenverde-600 transition-colors text-sm xl:text-base">Início</router-link>
-            <router-link to="/map" class="text-gray-900 hover:text-tokenverde-600 transition-colors text-sm xl:text-base">Mapa</router-link>
-            <router-link to="/login" class="text-gray-900 hover:text-tokenverde-600 transition-colors text-sm xl:text-base">Login</router-link>
-            <router-link to="/register" class="bg-tokenverde-600 hover:bg-tokenverde-700 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg transition-colors text-sm xl:text-base">Cadastrar</router-link>
+          <nav class="hidden lg:flex items-center space-x-4 xl:space-x-6">
+            <router-link to="/register" class="text-gray-900 hover:text-green-600 transition-colors text-sm xl:text-base font-medium">Registro de Usuários</router-link>
+            <router-link to="/vender-token" class="text-gray-900 hover:text-green-600 transition-colors text-sm xl:text-base font-medium">Vender Token</router-link>
+            <router-link to="/comprar-token" class="text-gray-900 hover:text-green-600 transition-colors text-sm xl:text-base font-medium">Comprar Token</router-link>
+            <router-link to="/como-funciona" class="text-gray-900 hover:text-green-600 transition-colors text-sm xl:text-base font-medium">Como funciona</router-link>
+            <router-link to="/marketplace" class="text-gray-900 hover:text-green-600 transition-colors text-sm xl:text-base font-medium">MarketPlace</router-link>
+            <router-link to="/calculadora" class="text-gray-900 hover:text-green-600 transition-colors text-sm xl:text-base font-medium">Calculadora de Compensação</router-link>
           </nav>
 
           <!-- Mobile menu button -->
           <div class="lg:hidden">
             <button 
               @click="mobileMenuOpen = !mobileMenuOpen"
-              class="text-gray-900 hover:text-tokenverde-600 focus:outline-none focus:text-tokenverde-600"
+              class="text-gray-900 hover:text-green-600 focus:outline-none focus:text-green-600 transition-colors"
             >
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path v-if="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -36,34 +38,48 @@
 
         <!-- Mobile Navigation -->
         <div v-if="mobileMenuOpen" class="lg:hidden">
-          <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
-            <router-link 
-              to="/" 
-              @click="mobileMenuOpen = false"
-              class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-tokenverde-600 hover:bg-gray-50 rounded-md"
-            >
-              Início
-            </router-link>
-            <router-link 
-              to="/map" 
-              @click="mobileMenuOpen = false"
-              class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-tokenverde-600 hover:bg-gray-50 rounded-md"
-            >
-              Mapa
-            </router-link>
-            <router-link 
-              to="/login" 
-              @click="mobileMenuOpen = false"
-              class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-tokenverde-600 hover:bg-gray-50 rounded-md"
-            >
-              Login
-            </router-link>
+          <div class="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-sm border-t border-gray-200 rounded-b-xl">
             <router-link 
               to="/register" 
               @click="mobileMenuOpen = false"
-              class="block px-3 py-2 text-base font-medium bg-tokenverde-600 text-white hover:bg-tokenverde-700 rounded-md"
+              class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
             >
-              Cadastrar
+              Registro de Usuários
+            </router-link>
+            <router-link 
+              to="/vender-token" 
+              @click="mobileMenuOpen = false"
+              class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+            >
+              Vender Token
+            </router-link>
+            <router-link 
+              to="/comprar-token" 
+              @click="mobileMenuOpen = false"
+              class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+            >
+              Comprar Token
+            </router-link>
+            <router-link 
+              to="/como-funciona" 
+              @click="mobileMenuOpen = false"
+              class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+            >
+              Como funciona
+            </router-link>
+            <router-link 
+              to="/marketplace" 
+              @click="mobileMenuOpen = false"
+              class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+            >
+              MarketPlace
+            </router-link>
+            <router-link 
+              to="/calculadora" 
+              @click="mobileMenuOpen = false"
+              class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+            >
+              Calculadora de Compensação
             </router-link>
           </div>
         </div>
@@ -71,98 +87,115 @@
     </header>
 
     <!-- Hero Section -->
-    <main>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        <div class="text-center">
-          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
-            Tokenização de
-            <span class="text-tokenverde-600">Áreas Verdes</span>
-          </h1>
-          <p class="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-            Conectamos investidores ambientalmente conscientes com projetos de preservação 
-            e reflorestamento através da tecnologia blockchain.
-          </p>
-          <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 px-4">
-            <router-link to="/register" class="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 w-full sm:w-auto">
-              Começar a Investir
-            </router-link>
-            <router-link to="/map" class="btn-secondary text-base sm:text-lg px-6 sm:px-8 py-3 w-full sm:w-auto">
-              Explorar Áreas
-            </router-link>
-          </div>
+    <main class="flex-1">
+      <div class="relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 bg-gradient-to-br from-green-100/30 via-emerald-100/20 to-teal-100/30"></div>
+        <div class="absolute inset-0 opacity-10">
+          <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(156, 146, 172, 0.1) 1px, transparent 0); background-size: 20px 20px;"></div>
         </div>
-      </div>
-
-      <!-- Features Section -->
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          <div class="card text-center">
-            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-tokenverde-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-6 h-6 sm:w-8 sm:h-8 text-tokenverde-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-              </svg>
-            </div>
-            <h3 class="text-lg sm:text-xl font-semibold mb-2">Investimento Direto</h3>
-            <p class="text-sm sm:text-base text-gray-600">Cada token representa uma área real preservada, garantindo transparência total.</p>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
+          <!-- Main Content -->
+          <div class="text-center mb-16">
+            
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 leading-tight">
+              ÁREAS PARA 
+              <span class="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">COMPENSAÇÃO</span>
+              <br>
+              <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl">SEM BUROCRACIA!</span>
+            </h1>
+            
+            <p class="text-xl sm:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Desburocratizamos o processo de compensação ambiental com áreas pré-selecionadas e documentação pronta
+            </p>
           </div>
 
-          <div class="card text-center">
-            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-tokenverde-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-6 h-6 sm:w-8 sm:h-8 text-tokenverde-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+          <!-- Features Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4 text-center">Áreas Pré-Selecionadas</h3>
+              <p class="text-gray-600 text-center leading-relaxed">
+                Detectamos, selecionamos e validamos áreas documentadas e tokenizadas para sua compensação
+              </p>
             </div>
-            <h3 class="text-lg sm:text-xl font-semibold mb-2">Impacto Mensurável</h3>
-            <p class="text-sm sm:text-base text-gray-600">Relatórios detalhados sobre o impacto ambiental das suas áreas investidas.</p>
+
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4 text-center">Entrega em 24h</h3>
+              <p class="text-gray-600 text-center leading-relaxed">
+                Documentação finalizada e relatório de compensação ambiental em até 24 horas úteis
+              </p>
+            </div>
+
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4 text-center">Agilidade Garantida</h3>
+              <p class="text-gray-600 text-center leading-relaxed">
+                Aprovação mais rápida dos seus projetos de supressão com documentação completa
+              </p>
+            </div>
           </div>
 
-          <div class="card text-center md:col-span-2 lg:col-span-1">
-            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-tokenverde-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-6 h-6 sm:w-8 sm:h-8 text-tokenverde-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-            <h3 class="text-lg sm:text-xl font-semibold mb-2">Tecnologia Blockchain</h3>
-            <p class="text-sm sm:text-base text-gray-600">Segurança e rastreabilidade garantidas pela tecnologia blockchain.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stats Section -->
-      <div class="bg-white py-12 sm:py-16 lg:py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
-            <div>
-              <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-tokenverde-600 mb-2">1,234</div>
-              <div class="text-xs sm:text-sm lg:text-base text-gray-600">Áreas Tokenizadas</div>
-            </div>
-            <div>
-              <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-tokenverde-600 mb-2">5,678</div>
-              <div class="text-xs sm:text-sm lg:text-base text-gray-600">Investidores Ativos</div>
-            </div>
-            <div>
-              <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-tokenverde-600 mb-2">12,345</div>
-              <div class="text-xs sm:text-sm lg:text-base text-gray-600">Hectares Preservados</div>
-            </div>
-            <div>
-              <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-tokenverde-600 mb-2">R$ 2.5M</div>
-              <div class="text-xs sm:text-sm lg:text-base text-gray-600">Valor Total Investido</div>
+          <!-- CTA Section -->
+          <div class="text-center">
+            <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl border border-white/30 max-w-4xl mx-auto">
+              <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Como Funciona</h2>
+              <div class="space-y-6 text-lg text-gray-700 leading-relaxed">
+                <p>
+                  <strong>Desburocratizamos o processo de compensação</strong>, com áreas pré-selecionadas, documentadas, verificadas e validadas e Tokenizadas. De forma que após a sua aquisição, entregamos toda a documentação finalizada junto ao Relatório de compensação ambiental, para seu projeto em até 24horas uteis.
+                </p>
+                <p>
+                  Detectamos áreas, selecionamos, validamos a área, documentação e elaboramos toda documentação para que você apenas precise indicar ao órgão ambiental a área.
+                </p>
+                <p>
+                  <strong>Fazendo a aquisição das áreas de compensação conosco, você ganha agilidade na aprovação dos seus projetos de supressão.</strong>
+                </p>
+              </div>
+              
+              <div class="mt-8">
+                <router-link to="/register" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white text-lg font-semibold rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                  Começar Agora
+                  <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                  </svg>
+                </router-link>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </main>
+                 </div>
+       </div>
+     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8 sm:py-12">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <p class="text-sm sm:text-base">&copy; 2024 TokenVerde. Todos os direitos reservados.</p>
-        </div>
-      </div>
-    </footer>
-  </div>
-</template>
+     <!-- WhatsApp Floating Button -->
+     <div class="fixed bottom-6 right-6 z-50">
+       <a 
+         href="https://wa.me/554192446793?text=Olá! Gostaria de saber mais sobre compensação ambiental."
+         target="_blank"
+         rel="noopener noreferrer"
+         class="inline-flex items-center justify-center w-16 h-16 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110"
+         title="Fale conosco no WhatsApp"
+       >
+         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+         </svg>
+       </a>
+     </div>
+   </div>
+ </template>
 
 <script setup>
 import { ref } from 'vue'

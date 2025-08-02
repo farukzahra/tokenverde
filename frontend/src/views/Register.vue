@@ -62,8 +62,8 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Usuário</label>
             <select v-model="form.role" class="input-field text-sm sm:text-base" required>
-              <option value="INVESTIDOR">Investidor</option>
-              <option value="PROPERTY_OWNER">Proprietário de Terreno</option>
+              <option value="INVESTIDOR">Comprador</option>
+              <option value="PROPERTY_OWNER">Vendedor</option>
             </select>
           </div>
           
