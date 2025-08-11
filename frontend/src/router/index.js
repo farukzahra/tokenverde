@@ -60,6 +60,11 @@ const routes = [
     path: '/marketplace',
     name: 'Marketplace',
     component: () => import('../views/Marketplace.vue')
+  },
+  {
+    path: '/calculadora',
+    name: 'Calculadora',
+    component: () => import('../views/Calculadora.vue')
   }
 ]
 
