@@ -15,8 +15,6 @@
         <!-- Desktop Navigation -->
         <nav class="hidden lg:flex items-center space-x-4 xl:space-x-6">
           <router-link to="/como-funciona" class="text-gray-900 hover:text-green-600 transition-colors text-sm xl:text-base font-medium">Como funciona</router-link>
-          <router-link to="/vender-token" class="text-gray-900 hover:text-green-600 transition-colors text-sm xl:text-base font-medium">Vender Token</router-link>
-          <router-link to="/comprar-token" class="text-gray-900 hover:text-green-600 transition-colors text-sm xl:text-base font-medium">Comprar Token</router-link>
           <router-link to="/marketplace" class="text-gray-900 hover:text-green-600 transition-colors text-sm xl:text-base font-medium">MarketPlace</router-link>
           <router-link to="/calculadora" class="text-gray-900 hover:text-green-600 transition-colors text-sm xl:text-base font-medium">Calculadora de Compensação</router-link>
           <router-link to="/login" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white text-sm font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Entrar</router-link>
@@ -45,20 +43,6 @@
             class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
           >
             Como funciona
-          </router-link>
-          <router-link 
-            to="/vender-token" 
-            @click="mobileMenuOpen = false"
-            class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-          >
-            Vender Token
-          </router-link>
-          <router-link 
-            to="/comprar-token" 
-            @click="mobileMenuOpen = false"
-            class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-          >
-            Comprar Token
           </router-link>
           <router-link 
             to="/marketplace" 
