@@ -23,19 +23,182 @@
             </p>
           </div>
 
-          <!-- Placeholder Content -->
-          <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl border border-white/30 max-w-4xl mx-auto text-center">
-            <div class="w-24 h-24 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-              <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-              </svg>
+          <!-- Filtros e Busca -->
+          <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 mb-8">
+            <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+              <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                <input 
+                  type="text" 
+                  placeholder="Buscar por localização, área ou proprietário..."
+                  class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent w-full sm:w-80"
+                >
+                <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                  <option value="">Todas as áreas</option>
+                  <option value="reserva-legal">Reserva Legal</option>
+                  <option value="app">Área de Preservação Permanente</option>
+                  <option value="reflorestamento">Reflorestamento</option>
+                </select>
+                <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                  <option value="">Qualquer tamanho</option>
+                  <option value="0-10">0-10 hectares</option>
+                  <option value="10-50">10-50 hectares</option>
+                  <option value="50-100">50-100 hectares</option>
+                  <option value="100+">100+ hectares</option>
+                </select>
+              </div>
+              <button class="px-6 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg">
+                Buscar
+              </button>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Marketplace em Construção</h2>
+          </div>
+
+          <!-- Grid de Áreas Verdes -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Área 1 -->
+            <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="relative mb-4">
+                <div class="w-full h-48 bg-gradient-to-br from-green-400 to-emerald-600 rounded-xl flex items-center justify-center">
+                  <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                </div>
+                <div class="absolute top-3 right-3 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                  Reserva Legal
+                </div>
+              </div>
+              
+              <h3 class="text-xl font-bold text-gray-900 mb-2">Fazenda São João</h3>
+              <p class="text-gray-600 text-sm mb-3">São Paulo, SP - 150 hectares</p>
+              
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Área disponível:</span>
+                  <span class="font-medium">30 hectares</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Preço por hectare:</span>
+                  <span class="font-medium text-green-600">R$ 15,00</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Status:</span>
+                  <span class="text-green-600 font-medium">Aprovado</span>
+                </div>
+              </div>
+              
+              <button class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-2 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg">
+                Ver Detalhes
+              </button>
+            </div>
+
+            <!-- Área 2 -->
+            <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="relative mb-4">
+                <div class="w-full h-48 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-xl flex items-center justify-center">
+                  <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                </div>
+                <div class="absolute top-3 right-3 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                  APP
+                </div>
+              </div>
+              
+              <h3 class="text-xl font-bold text-gray-900 mb-2">Sítio Boa Vista</h3>
+              <p class="text-gray-600 text-sm mb-3">Campinas, SP - 80 hectares</p>
+              
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Área disponível:</span>
+                  <span class="font-medium">12 hectares</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Preço por hectare:</span>
+                  <span class="font-medium text-green-600">R$ 18,50</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Status:</span>
+                  <span class="text-green-600 font-medium">Aprovado</span>
+                </div>
+              </div>
+              
+              <button class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-2 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg">
+                Ver Detalhes
+              </button>
+            </div>
+
+            <!-- Área 3 -->
+            <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="relative mb-4">
+                <div class="w-full h-48 bg-gradient-to-br from-purple-400 to-pink-600 rounded-xl flex items-center justify-center">
+                  <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                </div>
+                <div class="absolute top-3 right-3 bg-purple-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                  Reflorestamento
+                </div>
+              </div>
+              
+              <h3 class="text-xl font-bold text-gray-900 mb-2">Chácara Recanto</h3>
+              <p class="text-gray-600 text-sm mb-3">Ribeirão Preto, SP - 120 hectares</p>
+              
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Área disponível:</span>
+                  <span class="font-medium">25 hectares</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Preço por hectare:</span>
+                  <span class="font-medium text-green-600">R$ 12,00</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Status:</span>
+                  <span class="text-yellow-600 font-medium">Em Análise</span>
+                </div>
+              </div>
+              
+              <button class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-2 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg">
+                Ver Detalhes
+              </button>
+            </div>
+          </div>
+
+          <!-- Estatísticas -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center shadow-lg border border-white/20">
+              <div class="text-3xl font-bold text-green-600 mb-2">24</div>
+              <div class="text-gray-600 text-sm">Áreas Disponíveis</div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center shadow-lg border border-white/20">
+              <div class="text-3xl font-bold text-blue-600 mb-2">1.250</div>
+              <div class="text-gray-600 text-sm">Hectares Totais</div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center shadow-lg border border-white/20">
+              <div class="text-3xl font-bold text-purple-600 mb-2">R$ 18.500</div>
+              <div class="text-gray-600 text-sm">Valor Médio/ha</div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center shadow-lg border border-white/20">
+              <div class="text-3xl font-bold text-emerald-600 mb-2">156</div>
+              <div class="text-gray-600 text-sm">Transações</div>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-8 text-center shadow-2xl border border-white/30">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Precisa de Área para Compensação?</h2>
             <p class="text-lg text-gray-600 mb-6">
-              Estamos desenvolvendo uma plataforma completa para você explorar, comparar e adquirir tokens de áreas verdes para compensação ambiental.
+              Nossa equipe pode ajudar você a encontrar a área perfeita para seu projeto
             </p>
-            <div class="bg-green-50 rounded-xl p-4 inline-block">
-              <p class="text-green-800 font-medium">🚧 Em desenvolvimento - Em breve disponível! 🚧</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <button class="px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl">
+                Falar com Especialista
+              </button>
+              <button class="px-8 py-3 border-2 border-green-600 text-green-600 rounded-xl hover:bg-green-600 hover:text-white transition-all duration-300">
+                Solicitar Orçamento
+              </button>
             </div>
           </div>
         </div>
